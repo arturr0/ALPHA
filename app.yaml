@@ -3,7 +3,7 @@ entrypoint: gunicorn -b :$PORT main:app
 
 # Replace 'your_project_id' with your actual Google Cloud Project ID
 env_variables:
-  PROJECT_ID: your_project_id
+  PROJECT_ID: My First Project
 
 automatic_scaling:
   target_cpu_utilization: 0.65
