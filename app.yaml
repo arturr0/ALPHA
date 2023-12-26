@@ -1,11 +1,19 @@
-network:
-  name: NETWORK_NAME
-  instance_ip_mode: INSTANCE_IP_MODE
-  instance_tag: TAG_NAME
-  subnetwork_name: SUBNETWORK_NAME
-  session_affinity: true
-  forwarded_ports:
-    - PORT
-    - HOST_PORT:CONTAINER_PORT
-    - PORT/tcp
-    - HOST_PORT:CONTAINER_PORT/udp
+runtime: python39
+entrypoint: gunicorn -b :$PORT main:app
+
+# Replace 'your_project_id' with your actual Google Cloud Project ID
+env_variables:
+  PROJECT_ID: your_project_id
+
+automatic_scaling:
+  target_cpu_utilization: 0.65
+  target_throughput_utilization: 0.65
+  max_instances: 10
+  min_instances: 1
+  cool_down_period_sec: 60
+
+handlers:
+- url: /.*
+  script: auto
+
+name: my-app-service  # Replace with your desired service name
